@@ -1,29 +1,30 @@
-/**
- * Created by luketwyman on 25/11/2015.
- */
+
+// Here we handle everything critical for scalable display in the canvas.
+// metrics() gets called once the page loads and on resize events.
 
 //-------------------------------------------------------------------------------------------
 //  METRICS
 //-------------------------------------------------------------------------------------------
 
 
-
 function metrics() {
 
+    // GET VIEW SIZE & PIXEL DENSITY //
     const width = window.innerWidth;
     const height = window.innerHeight;
     const ratio = getPixelRatio();
 
 
+    // SCALE THE CANVAS //
     for (var i=0; i<canvas.length; i++) {
         canvas[i].width  = width * ratio;
         canvas[i].height = height * ratio;
         canvas[i].style.width = width + "px";
         canvas[i].style.height = height + "px";
     }
-
     console.log(width);
     console.log(ratio);
+
 
     // UNIT SIZES //
     halfX = Math.round((width * ratio)/2);
@@ -31,18 +32,15 @@ function metrics() {
     fullX = width * ratio;
     fullY = height * ratio;
 
+
     // DEVICE CHECK //
-    if (fullY>(fullX*1.05)) {
-        device = "mobile";
-    } else if (fullY>(fullX*0.65)) {
-        device = "tablet";
-    } else {
-        device = "desktop";
-    }
+    if      (fullY > (fullX*1.05)) { device = "mobile";  }
+    else if (fullY > (fullX*0.65)) { device = "tablet";  }
+    else                           { device = "desktop"; }
     console.log(device);
 
-    var u;
 
+    var u;
     if (device=="mobile") {
 
         u = (width * ratio) * 2.6;
@@ -69,9 +67,9 @@ function metrics() {
     }
 
 
-
     dx = halfX;
     dy = halfY;
+    resizeObjects();
 }
 
 
@@ -85,4 +83,11 @@ function getPixelRatio() {
         cntx.backingStorePixelRatio || 1;
 
     return dpr / bsr;
+}
+
+
+function resizeObjects() {
+    if (UI) {
+        UI.resize();
+    }
 }

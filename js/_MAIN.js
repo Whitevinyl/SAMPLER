@@ -30,6 +30,7 @@ var touchTakeover = false;
 var touch;
 var mouseIsDown = false;
 
+var UI;
 
 
 
@@ -38,7 +39,7 @@ var bgCols = [new RGBA(0,0,25,1)];
 var textCol = new RGBA(255,255,255,1);
 var primaryCol = new RGBA(255,67,101,1);
 var secondaryCol = new RGBA(0,0,51,1);
-
+var highlightCol = new RGBA(230,165,255,1);
 
 //-------------------------------------------------------------------------------------------
 //  INITIALISE
@@ -68,6 +69,8 @@ function init() {
     setupInteraction(canvas[0]);
     setupAudio();
 
+    UI = new MasterUI();
+    UI.setup();
 
 
     // DONE //
@@ -104,6 +107,8 @@ function update() {
     if (TWEEN) {
         TWEEN.update();
     }
+
+    UI.update();
 }
 
 

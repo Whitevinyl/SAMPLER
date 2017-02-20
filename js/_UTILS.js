@@ -91,6 +91,10 @@ function vectorFromAngle(angle) {
 }
 
 
+// AVERAGE OF TWO VALUES //
+function getAverage(a,b) {
+    return (a+b)/2;
+}
 
 //-------------------------------------------------------------------------------------------
 //  OBJECTS

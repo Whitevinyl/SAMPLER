@@ -1,13 +1,9 @@
 
 
-var pot;
-var dragCursor = new Alpha(0);
 
 
 function setupDrawing() {
-    var u = units;
-    pot = new Pot('Red', 0, 99, 0);
-    pot.place(dx, dy,66);
+
 }
 
 
@@ -42,9 +38,7 @@ function drawScene() {
 
 
     pot.draw(ct,font);
-
-
-    conditionAlpha((potOver || activePot),dragCursor,5);
+    wave.draw(ct);
 
 
     color.stroke(ct,textCol);
@@ -57,20 +51,6 @@ function drawScene() {
 //-------------------------------------------------------------------------------------------
 //  DRAW FUNCTIONS
 //-------------------------------------------------------------------------------------------
-
-
-function conditionAlpha(condition,alpha,speed) {
-    if (condition) {
-        if (alpha.a < 100) {
-            alpha.a += speed;
-        }
-    } else {
-        if (alpha.a > 0) {
-            alpha.a -= speed;
-        }
-    }
-}
-
 
 
 function setFont(ctx,font,size,weight,style) {

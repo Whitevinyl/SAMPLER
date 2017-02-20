@@ -61,8 +61,8 @@ proto.update = function() {
         var norm = this.lastNormal + ((mouseX - this.clickX) / (sensitivity*units));
         norm = valueInRange(norm,0,1);
         this.value = this.min + (this.range * norm);
-        var v = this.value * 2;
-        color.master.R = v; // temp
+        //var v = this.value * 2;
+        //color.master.R = v; // temp
         //color.master.G = v; // temp
         //color.master.B = v; // temp
     }
@@ -120,6 +120,7 @@ proto.draw = function(ctx,font) {
 
     // Foreground Ring //
     color.fill(ctx,primaryCol);
+    if (activePot === this) color.fill(ctx,textCol);
     ctx.beginPath();
     ctx.arc(x,y,rad, startAngle,startAngle + fillAngle);
     ctx.arc(x,y,rad - width, startAngle + fillAngle, startAngle,true);
