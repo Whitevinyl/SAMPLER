@@ -1,6 +1,7 @@
 
 
-
+var noisePNG = new Image();
+noisePNG.src = 'img/noise5.png';
 
 function setupDrawing() {
 
@@ -41,12 +42,14 @@ function drawScene() {
     for (var i=0; i<l; i++) {
         pots[i].draw(ct, font);
     }
-    wave.draw(ct);
+    wave.draw(ct, font);
 
 
     /*color.stroke(ct,textCol);
     ct.lineWidth = 1.5 * u;
     drawDragCursor(ct,mouseX,mouseY,(12 * (dragCursor.a/100)) * u);*/
+
+    drawPattern(ct,0,0,fullX,fullY,noisePNG,150);
 }
 
 
@@ -160,3 +163,15 @@ function drawDragCursor(ct,x,y,s) {
 //-------------------------------------------------------------------------------------------
 
 
+function drawPattern(ctx,x,y,w,h,pattern,size) {
+
+    var c = Math.ceil(w/size);
+    var r = Math.ceil(h/size);
+    var i,j;
+
+    for (i=0; i<r; i++) { // for each row
+        for (j=0; j<c; j++) { // for each col
+            ctx.drawImage(pattern, 0, 0, pattern.width, pattern.height, x+(j*size), y+(i*size), size, size);
+        }
+    }
+}

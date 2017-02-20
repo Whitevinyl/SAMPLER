@@ -32,6 +32,12 @@ function valueInRange(value,floor,ceiling) {
 }
 
 
+// CHECK IF IN A RANGE /
+function isInRange(value,min,max) {
+    return ((value > min) && (value < max));
+}
+
+
 // LERP TWEEN / EASE //
 function lerp(current,destination,speed) {
     return current + (((destination-current)/100) * speed);

@@ -9,6 +9,10 @@ var division = 1.5;
 
 function WaveDisplay() {
     this.data = [[],[]];
+    this.start = 10;
+    this.end = 100;
+    this.loopStart = 50;
+    this.loopEnd = 75;
 }
 var proto = WaveDisplay.prototype;
 
@@ -19,6 +23,13 @@ var proto = WaveDisplay.prototype;
 
 proto.place = function(x,y) {
     this.position = new Point(x,y);
+
+    var handleY = y - (6*units);
+    var perc = UI.body/100;
+    this.handles = [];
+    this.handles.push(new Handle(x + (this.start * perc), handleY));
+    this.handles.push(new Handle(x + (this.loopStart * perc), handleY));
+    this.handles.push(new Handle(x + (this.loopEnd * perc), handleY));
 };
 
 //-------------------------------------------------------------------------------------------
@@ -110,10 +121,11 @@ proto.update = function() {
 //  DRAW
 //-------------------------------------------------------------------------------------------
 
-proto.draw = function(ctx) {
+proto.draw = function(ctx,font) {
     var u = units;
-    var h = 60 * u;
+    var h = 50 * u;
     var w = UI.body;
+    var perc = w/100;
     var x = this.position.x;
     var y = this.position.y + h;
     var l = this.data[0].length;
@@ -159,10 +171,46 @@ proto.draw = function(ctx) {
     ctx.fill();
 
 
+    var st = this.start * perc;
+    var ls = this.loopStart * perc;
+    var le = this.loopEnd * perc;
 
+
+    // highlight //
     color.fill(ctx,highlightCol);
     ctx.globalAlpha = 0.1;
-    ctx.fillRect(x + (w/2), y-h, w/5, h*2);
+    ctx.fillRect(x + ls, y-h, le - ls, h*2);
+
+    //darken //
+    color.fill(ctx,bgCols[0]);
+    ctx.globalAlpha = 0.6;
+    ctx.fillRect(x, y-h, st, h*2);
+    ctx.fillRect(x + le, y-h, w - le, h*2);
     ctx.globalAlpha = 1;
+
+    // handles //
+    l = this.handles.length;
+    for (i=0; i<l; i++) {
+        this.handles[i].draw(ctx);
+    }
+
+
+    // MARKINGS //
+    color.fill(ctx,textCol);
+    color.stroke(ctx,textCol);
+    ctx.lineWidth = 1.5 * u;
+    ctx.textAlign = 'center';
+
+    setFont(ctx,font,dataType);
+    y = this.position.y - (12*u);
+
+    ctx.fillText('START',x + st,y - (6*u));
+    ctx.fillText('LOOP',x + ls + ((le - ls)/2),y - (6*u));
+
+    ctx.beginPath();
+    ctx.moveTo(x + ls + ((le - ls)/2) - (7*u), y + (3*u));
+    ctx.lineTo(x + ls + ((le - ls)/2) + (7*u), y + (3*u));
+    ctx.stroke();
+
 };
 

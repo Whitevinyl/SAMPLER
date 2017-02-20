@@ -13,7 +13,14 @@ function setupAudio() {
     Tone.Master.volume.value = -3;
     var context = Tone.context;
 
-    sampleBuffer = new Tone.Buffer('audio/output9.wav',bufferLoaded);
+
+    var url;
+    url = 'audio/output9.wav';
+    url = 'audio/hit_tray2.wav';
+    url = 'audio/hit_xylophone2.wav';
+    url = 'audio/ambient01.mp3';
+
+    sampleBuffer = new Tone.Buffer(url,bufferLoaded);
 
 }
 
