@@ -5,6 +5,8 @@
 //  INIT
 //-------------------------------------------------------------------------------------------
 
+var division = 2;
+
 function WaveDisplay() {
     this.data = [[],[]];
 }
@@ -34,7 +36,7 @@ proto.populate = function(data) {
     // GET LENGTH & SPACING //
     this.data = [[],[]];
     var i, h;
-    var l = UI.body/3;
+    var l = UI.body/division;
     var peak = 0;
     var jump;
 
@@ -43,7 +45,7 @@ proto.populate = function(data) {
     } else {
         jump = (data[0].length-1)/l;
     }
-    var steps = Math.min(jump,20);
+    var steps = Math.min(jump,50);
 
     // LOOP & POPULATE DATA //
     for (i=0; i<l; i++) {
@@ -117,23 +119,30 @@ proto.draw = function(ctx) {
     var l = this.data[0].length;
     var i;
 
-    /*color.stroke(ctx,primaryCol);
-    ctx.beginPath();
-    ctx.moveTo(x,y + (this.data[0] * h));
-    for (var i=0; i<l; i++) {
-        ctx.lineTo(x + i,y + (this.data[i] * h));
-    }
-    ctx.stroke();*/
 
 
     ctx.globalAlpha = 1;
 
+
+    // STYLE A //
+    /*color.fill(ctx,secondaryCol);
+    for (i=0; i<l; i++) {
+        ctx.fillRect(x + (division*i),y,division,-(this.data[1][i] * h));
+    }
+
+    color.fill(ctx,primaryCol);
+    for (i=0; i<l; i++) {
+        ctx.fillRect(x + (division*i),y,division,-(this.data[0][i] * h));
+    }*/
+
+
+
+    // STYLE B //
     color.fill(ctx,secondaryCol);
     ctx.beginPath();
     ctx.moveTo(x,y);
     for (i=0; i<l; i++) {
-        //ctx.fillRect(x + (2*i),y,2,-(this.data[1][i] * h));
-        ctx.lineTo(x + (3*i), y - (this.data[1][i] * h));
+        ctx.lineTo(x + (division*i), y - (this.data[1][i] * h));
     }
     ctx.lineTo(x + w, y);
     ctx.closePath();
@@ -143,12 +152,13 @@ proto.draw = function(ctx) {
     ctx.beginPath();
     ctx.moveTo(x,y);
     for (i=0; i<l; i++) {
-        //ctx.fillRect(x + (2*i),y,2,-(this.data[0][i] * h));
-        ctx.lineTo(x + (3*i), y + (this.data[1][i] * h));
+        ctx.lineTo(x + (division*i), y + (this.data[1][i] * h));
     }
-    ctx.lineTo(x + UI.body, y);
+    ctx.lineTo(x + w, y);
     ctx.closePath();
     ctx.fill();
+
+
 
     color.fill(ctx,highlightCol);
     ctx.globalAlpha = 0.1;

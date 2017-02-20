@@ -61,6 +61,8 @@ proto.update = function() {
         var norm = this.lastNormal + ((mouseX - this.clickX) / (sensitivity*units));
         norm = valueInRange(norm,0,1);
         this.value = this.min + (this.range * norm);
+        division = this.value;
+        wave.populate(sampleBufferData);
         //var v = this.value * 2;
         //color.master.R = v; // temp
         //color.master.G = v; // temp

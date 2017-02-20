@@ -18,7 +18,7 @@ var proto = MasterUI.prototype;
 proto.setup = function() {
     this.resize();
 
-    pot = new Pot('Red', 0, 99, 50);
+    pot = new Pot('Division', 0.1, 20, 1);
     pot.place(dx, dy,66);
 
     wave = new WaveDisplay();
