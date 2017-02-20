@@ -36,14 +36,17 @@ function drawScene() {
     ct.textAlign = 'center';
     setFont(ct,font,bodyType);
 
-
-    pot.draw(ct,font);
+    // LOOP POTS (Temp ) //
+    var l = pots.length;
+    for (var i=0; i<l; i++) {
+        pots[i].draw(ct, font);
+    }
     wave.draw(ct);
 
 
-    color.stroke(ct,textCol);
+    /*color.stroke(ct,textCol);
     ct.lineWidth = 1.5 * u;
-    drawDragCursor(ct,mouseX,mouseY,(12 * (dragCursor.a/100)) * u);
+    drawDragCursor(ct,mouseX,mouseY,(12 * (dragCursor.a/100)) * u);*/
 }
 
 
@@ -99,10 +102,12 @@ function drawPlay(ct,x,y,w,h) {
     ct.fill();
 }
 
+
 function drawPause(ct,x,y,w,h) {
     ct.fillRect(x - (w*0.45), y - (h/2), w*0.25, h);
     ct.fillRect(x + (w*0.2), y - (h/2), w*0.25, h);
 }
+
 
 function drawHamburger(ct,x,y,w,h,t) {
     ct.fillRect(x - (w/2), y - (h/2), w, t);
@@ -110,16 +115,42 @@ function drawHamburger(ct,x,y,w,h,t) {
     ct.fillRect(x - (w/2), y + (h/2) - t, w, t);
 }
 
+
 function drawDragCursor(ct,x,y,s) {
+
+    s *= 1.5;
+    var vector;
+    var offset = 0;
+    if (activePot) {
+        vector = new Vector(mouseX - activePot.position.x, mouseY - activePot.position.y);
+        offset = TAU/4;
+    } else {
+        vector = new Vector();
+    }
+
+    var angle = angleFromVector(vector);
+
+    ct.save();
+
+    ct.translate(x,y);
+    ct.rotate(angle + offset);
+
+    x = 0;
+    y = 0;
+
     ct.beginPath();
-    ct.moveTo(x + s - (s/4), y - (s/2));
+    /*ct.moveTo(x + s - (s/4), y - (s/2));
     ct.lineTo(x + s + (s/4), y);
     ct.lineTo(x + s - (s/4), y + (s/2));
 
     ct.moveTo(x - s + (s/4), y - (s/2));
     ct.lineTo(x - s - (s/4), y);
     ct.lineTo(x - s + (s/4), y + (s/2));
+    ct.stroke();*/
+    ct.arc(x,y + (s/2),s,TAU * 0.7, TAU * 0.8);
     ct.stroke();
+
+    ct.restore();
 }
 
 

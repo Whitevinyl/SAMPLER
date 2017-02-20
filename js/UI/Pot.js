@@ -7,19 +7,21 @@
 
 var ringWidth = 5;
 var sensitivity = 120;
-var startAngle = TAU * 0.375;
 var fullAngle = TAU * 0.75;
+var originAngle = TAU / 4;
+var negativeAngle = TAU - fullAngle;
+var startAngle = originAngle + (negativeAngle/2);
+
 
 function Pot(label,min,max,value) {
-    this.label = arg(label,'').toUpperCase();
-    this.min   = arg(min,  0);
-    this.max   = arg(max,  99);
-    this.value = arg(value,50);
-    this.value = valueInRange(value,min,max);
+    this.label   = arg(label,'').toUpperCase();
+    this.min     = arg(min,  0);
+    this.max     = arg(max,  99);
+    this.value   = arg(value,50);
+    this.value   = valueInRange(value,min,max);
+    this.display = min;
 
     this.range = this.max - this.min;
-    this.lastNormal = 0;
-    this.clickX = 0;
 }
 var proto = Pot.prototype;
 
@@ -35,7 +37,7 @@ proto.place = function(x,y,size) {
 
 
 //-------------------------------------------------------------------------------------------
-//  HIT TEST
+//  INTERACTION
 //-------------------------------------------------------------------------------------------
 
 proto.hitTest = function() {
@@ -46,8 +48,23 @@ proto.hitTest = function() {
 
 proto.click = function() {
     activePot = this;
-    this.lastNormal = this.normal();
-    this.clickX = mouseX;
+    this.drag();
+};
+
+
+proto.drag = function() {
+    if (activePot === this) {
+
+        // get cursor angle and make relative of origin //
+        var cursorAngle = angleFromVector( new Vector(mouseX - this.position.x, mouseY - this.position.y) );
+        cursorAngle -= originAngle;
+        if (cursorAngle < 0) {
+            cursorAngle += TAU; // keep angle positive
+        }
+        var norm = (cursorAngle - (negativeAngle/2)) / fullAngle;
+        norm = valueInRange(norm,0,1);
+        this.value = this.min + (this.range * norm);
+    }
 };
 
 
@@ -56,22 +73,12 @@ proto.click = function() {
 //-------------------------------------------------------------------------------------------
 
 proto.update = function() {
-
-    if (activePot === this) {
-        var norm = this.lastNormal + ((mouseX - this.clickX) / (sensitivity*units));
-        norm = valueInRange(norm,0,1);
-        this.value = this.min + (this.range * norm);
-        division = this.value;
-        wave.populate(sampleBufferData);
-        //var v = this.value * 2;
-        //color.master.R = v; // temp
-        //color.master.G = v; // temp
-        //color.master.B = v; // temp
-    }
+    this.display = lerp(this.display,this.value,20);
 };
 
+
 proto.normal = function() {
-    return (this.value - this.min) / this.range;
+    return (this.display - this.min) / this.range;
 };
 
 

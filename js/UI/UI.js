@@ -6,7 +6,8 @@
 //-------------------------------------------------------------------------------------------
 
 
-var pot, wave;
+var wave;
+var pots = [];
 var dragCursor = new Alpha(0);
 
 function MasterUI() {
@@ -18,8 +19,16 @@ var proto = MasterUI.prototype;
 proto.setup = function() {
     this.resize();
 
-    pot = new Pot('Division', 0.1, 20, 1);
-    pot.place(dx, dy,66);
+    var pot;
+
+    pot = new Pot('Chance', 0, 99, 50);
+    pot.place(dx - (50*units), dy,66);
+    pots.push(pot);
+
+
+    pot = new Pot('Depth', 0, 99, 50);
+    pot.place(dx + (50*units), dy,66);
+    pots.push(pot);
 
     wave = new WaveDisplay();
     wave.place(dx - (this.body/2), 40*units);
@@ -30,8 +39,13 @@ proto.setup = function() {
 //-------------------------------------------------------------------------------------------
 
 proto.update = function() {
-
     conditionAlpha((potOver || activePot),dragCursor,5);
+
+    var l = pots.length;
+    for (var i=0; i<l; i++) {
+        pots[i].update();
+    }
+
 };
 
 

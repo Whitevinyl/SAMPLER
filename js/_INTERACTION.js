@@ -55,9 +55,12 @@ function mousePress() {
     mouseIsDown = true;
     rolloverCheck();
 
-
-    if (pot.hitTest()) {
-        pot.click();
+    // LOOP POTS (Temp ) //
+    var l = pots.length;
+    for (var i=0; i<l; i++) {
+        if (pots[i].hitTest()) {
+            pots[i].click();
+        }
     }
 }
 
@@ -88,19 +91,23 @@ function mouseMove(event) {
     rolloverCheck();
 
 
-    potOver = pot.hitTest();
+    // LOOP POTS (Temp ) //
+    potOver = false;
+    var l = pots.length;
+    for (var i=0; i<l; i++) {
+        if (pots[i].hitTest()) {
+            potOver = true;
+        }
 
-    if (mouseIsDown) {
-        pot.update();
+        if (mouseIsDown) {
+            pots[i].drag();
+        }
     }
-
 }
 
 function rolloverCheck() {
     var u = units;
-
     var test = hitTest(dx-(30*u), dy+(40*u), 60*u, 60*u);
-
 }
 
 

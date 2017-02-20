@@ -81,13 +81,26 @@ function getRadius(a,b) {
 
 // CONVERT FROM VECTOR TO ANGLE //
 function angleFromVector(vector) {
-    return Math.atan2(vector.y,vector.a);
+    return Math.atan2(vector.y,vector.x);
 }
 
 
 // CONVERT FROM ANGLE TO VECTOR //
 function vectorFromAngle(angle) {
     return new Vector(Math.cos(angle),Math.sin(angle));
+}
+
+
+// NORMALISE VECTOR //
+function normalizeVector(vector, scale) {
+    var vx = vector.x;
+    var vy = vector.y;
+    var norm = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
+    if (norm !== 0) {
+        vx = scale * vector.x / norm;
+        vy = scale * vector.y / norm;
+    }
+    return new Vector(vx,vy);
 }
 
 
