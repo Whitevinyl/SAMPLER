@@ -21,7 +21,7 @@ proto.setup = function() {
 
     var pot;
 
-    pot = new Pot('Chance', 0, 99, 50);
+    pot = new Pot('Chance', 0, 99, 89);
     pot.place(dx - (50*units), dy + (5*units),64);
     pots.push(pot);
 
@@ -46,6 +46,7 @@ proto.update = function() {
         pots[i].update();
     }
 
+    primaryCol = color.blend(primaries[1], primaries[2],pots[0].value);
 };
 
 

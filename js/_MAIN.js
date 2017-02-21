@@ -38,6 +38,7 @@ var UI;
 var bgCols = [new RGBA(0,0,25,1)];
 var textCol = new RGBA(255,255,255,1);
 var primaryCol = new RGBA(255,67,101,1);
+var primaries = [new RGBA(255,67,101,1), new RGBA(0,168,142,1), new RGBA(168,14,226,1), new RGBA(230,230,230,1), new RGBA(145,140,155,1)];
 var secondaryCol = new RGBA(0,0,53,1);
 var highlightCol = new RGBA(230,165,255,1);
 

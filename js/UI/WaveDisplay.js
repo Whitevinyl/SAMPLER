@@ -9,6 +9,7 @@ var division = 1.5;
 
 function WaveDisplay() {
     this.data = [[],[]];
+    this.duration = 0;
     this.start = 10;
     this.end = 100;
     this.loopStart = 50;
@@ -36,7 +37,7 @@ proto.place = function(x,y) {
 //  POPULATE
 //-------------------------------------------------------------------------------------------
 
-proto.populate = function(data) {
+proto.populate = function(data, duration) {
 
     // MONO OR STEREO //
     var mono = true;
@@ -46,6 +47,7 @@ proto.populate = function(data) {
 
     // GET LENGTH & SPACING //
     this.data = [[],[]];
+    this.duration = secondsToMinutes(duration);
     var i, h;
     var l = UI.body/division;
     var peak = 0;
@@ -58,6 +60,7 @@ proto.populate = function(data) {
     }
     var steps = Math.min(jump,50);
 
+
     // LOOP & POPULATE DATA //
     for (i=0; i<l; i++) {
 
@@ -66,10 +69,10 @@ proto.populate = function(data) {
         var b = 0;
         var index = Math.floor(i * jump);
 
+        // check multpile steps between jumps for greater accuracy //
         for (h=0; h<steps; h++) {
 
             var step = Math.floor((jump/steps))* h;
-
             if (mono) {
                 if (data[index + step]) {
                     s = data[index + step];
@@ -93,7 +96,7 @@ proto.populate = function(data) {
             }
         }
 
-
+        // push highs & lows //
         this.data[0].push(a);
         this.data[1].push(b);
     }
@@ -200,10 +203,12 @@ proto.draw = function(ctx,font) {
     color.stroke(ctx,textCol);
     ctx.lineWidth = 1.5 * u;
     ctx.textAlign = 'center';
-
     setFont(ctx,font,dataType);
-    y = this.position.y - (12*u);
 
+
+
+    // marker nodes //
+    y = this.position.y - (12*u);
     ctx.fillText('START',x + st,y - (6*u));
     ctx.fillText('LOOP',x + ls + ((le - ls)/2),y - (6*u));
 
@@ -212,5 +217,13 @@ proto.draw = function(ctx,font) {
     ctx.lineTo(x + ls + ((le - ls)/2) + (7*u), y + (3*u));
     ctx.stroke();
 
+
+    // duration //
+    y = this.position.y + (h*1.5) + (dataType * 0.3);
+    ctx.fillText(this.duration,x + w - (20*u),y);
+    ctx.beginPath();
+    ctx.moveTo(x + w - (20*u) - (7*u), y + (h/4));
+    ctx.lineTo(x + w - (20*u) + (7*u), y + (h/4));
+    ctx.stroke();
 };
 

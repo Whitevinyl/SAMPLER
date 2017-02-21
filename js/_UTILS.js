@@ -115,6 +115,18 @@ function getAverage(a,b) {
     return (a+b)/2;
 }
 
+
+// SECONDS TO MINUTES //
+function secondsToMinutes(time) {
+    time = Math.round(time);
+    var minutes = Math.floor(time / 60);
+    var seconds = time - (minutes * 60);
+    return str_pad_left(minutes,'0',2) + ':' + str_pad_left(seconds,'0',2);
+}
+function str_pad_left(string,pad,length) {
+    return (new Array(length+1).join(pad)+string).slice(-length);
+}
+
 //-------------------------------------------------------------------------------------------
 //  OBJECTS
 //-------------------------------------------------------------------------------------------

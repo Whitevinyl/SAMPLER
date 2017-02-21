@@ -49,6 +49,10 @@ function drawScene() {
     ct.lineWidth = 1.5 * u;
     drawDragCursor(ct,mouseX,mouseY,(12 * (dragCursor.a/100)) * u);*/
 
+    color.stroke(ct,textCol);
+    ct.lineWidth = 1.5 * u;
+    drawMenuIcon(ct,fullX - (30*u), (25*u), 28*u, 12*u);
+
     drawPattern(ct,0,0,fullX,fullY,noisePNG,150);
 }
 
@@ -116,6 +120,20 @@ function drawHamburger(ct,x,y,w,h,t) {
     ct.fillRect(x - (w/2), y - (h/2), w, t);
     ct.fillRect(x - (w/2), y - (t/2), w, t);
     ct.fillRect(x - (w/2), y + (h/2) - t, w, t);
+}
+
+
+function drawMenuIcon(ct,x,y,w,h) {
+    ct.beginPath();
+    ct.moveTo(x - (w/2), y - (h/2));
+    ct.lineTo(x, y - (h/2));
+
+    ct.moveTo(x - (w/2), y);
+    ct.lineTo(x + (w/2), y);
+
+    ct.moveTo(x, y + (h/2));
+    ct.lineTo(x + (w/2), y + (h/2));
+    ct.stroke();
 }
 
 

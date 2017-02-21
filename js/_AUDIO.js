@@ -28,7 +28,7 @@ function setupAudio() {
 
 function bufferLoaded() {
     sampleBufferData = sampleBuffer.toArray();
-    wave.populate(sampleBufferData);
+    wave.populate(sampleBufferData,sampleBuffer.duration);
 }
 
 
