@@ -61,8 +61,10 @@ proto.hitTest = function() {
 
 
 proto.click = function() {
-    activePot = this;
-    this.drag();
+    if (this.hitTest()) {
+        activePot = this;
+        this.drag();
+    }
 };
 
 

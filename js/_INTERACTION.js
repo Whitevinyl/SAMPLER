@@ -7,6 +7,7 @@
 
 var potOver = false;
 var activePot = null;
+var activeHandle = null;
 
 function setupInteraction(target) {
 
@@ -71,6 +72,7 @@ function mousePress() {
 function mouseRelease() {
     mouseIsDown = false;
     activePot = null;
+    activeHandle = null;
 }
 
 

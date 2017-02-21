@@ -10,6 +10,7 @@
 var pots = [];
 var dragCursor = new Alpha(0);
 
+
 function MasterUI() {
     this.sampler = new Panel(0,0);
 }
@@ -110,8 +111,10 @@ proto.drag = function() {
 //  INIT
 //-------------------------------------------------------------------------------------------
 
-function Handle(x,y) {
+function Handle(x,y,size,mode) {
     this.position = new Point(x,y);
+    this.size = size;
+    this.mode = mode;
 }
 proto = Handle.prototype;
 
@@ -129,7 +132,7 @@ proto.update = function() {
 
 proto.draw = function(ctx) {
     var u = units;
-    var size = 6 * u;
+    var size = (this.size/2) * u;
     var x = this.position.x;
     var y = this.position.y;
 
@@ -145,7 +148,41 @@ proto.draw = function(ctx) {
     ctx.stroke();
 };
 
+//-------------------------------------------------------------------------------------------
+//  INTERACTION
+//-------------------------------------------------------------------------------------------
 
+proto.hitTest = function() {
+    var size = (this.size * units) * 1.2;
+    return hitTest(this.position.x - (size/2), this.position.y - (size/2), size, size);
+};
+
+
+proto.click = function() {
+    console.log('click');
+    activeHandle = this;
+};
+
+
+proto.drag = function() {
+    if (activeHandle === this) {
+        switch (this.mode) {
+
+            case 'x':
+                this.position.x = mouseX;
+                break;
+
+            case 'y':
+                this.position.y = mouseY;
+                break;
+
+            case 'xy':
+                this.position.x = mouseX;
+                this.position.y = mouseY;
+                break;
+        }
+    }
+};
 
 
 
@@ -196,9 +233,7 @@ proto.hitTest = function() {
 proto.click = function() {
     var l = this.controls.length;
     for (var i=0; i<l; i++) {
-        if (this.controls[i].hitTest()) {
-            this.controls[i].click();
-        }
+        this.controls[i].click();
     }
 };
 

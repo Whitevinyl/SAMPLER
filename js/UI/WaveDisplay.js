@@ -31,9 +31,9 @@ proto.place = function(parent,x,y) {
     var handleY = this.position.y - (6*units);
     var perc = UI.body/100;
     this.handles = [];
-    this.handles.push(new Handle(handleX + (this.start * perc), handleY));
-    this.handles.push(new Handle(handleX + (this.loopStart * perc), handleY));
-    this.handles.push(new Handle(handleX + (this.loopEnd * perc), handleY));
+    this.handles.push(new Handle(handleX + (this.start * perc), handleY, 12, 'x'));
+    this.handles.push(new Handle(handleX + (this.loopStart * perc), handleY, 12, 'x'));
+    this.handles.push(new Handle(handleX + (this.loopEnd * perc), handleY, 12, 'x'));
 };
 
 //-------------------------------------------------------------------------------------------
@@ -127,19 +127,34 @@ proto.hitTest = function() {
 
 
 proto.click = function() {
+    var l = this.handles.length;
+    for (var i=0; i<l; i++) {
+        if (this.handles[i].hitTest()) {
+            this.handles[i].click();
+        }
+    }
 };
 
 
 proto.drag = function() {
-
+    if (mouseIsDown) {
+        var l = this.handles.length;
+        for (var i=0; i<l; i++) {
+            this.handles[i].drag();
+        }
+    }
 };
+
 
 //-------------------------------------------------------------------------------------------
 //  UPDATE
 //-------------------------------------------------------------------------------------------
 
 proto.update = function() {
-
+    var perc = UI.body/100;
+    this.start = this.handles[0].position.x / perc;
+    this.loopStart = this.handles[1].position.x / perc;
+    this.loopEnd = this.handles[2].position.x / perc;
 };
 
 
