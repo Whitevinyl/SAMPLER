@@ -111,8 +111,10 @@ proto.drag = function() {
 //  INIT
 //-------------------------------------------------------------------------------------------
 
-function Handle(x,y,size,mode) {
-    this.position = new Point(x,y);
+function Handle(parent,x,y,size,mode) {
+    this.parent = parent;
+    this.relativePosition = new Point(x,y);
+    this.position = combinePoints([this.parent.position,this.relativePosition]);
     this.size = size;
     this.mode = mode;
 }
@@ -153,13 +155,12 @@ proto.draw = function(ctx) {
 //-------------------------------------------------------------------------------------------
 
 proto.hitTest = function() {
-    var size = (this.size * units) * 1.2;
+    var size = (this.size * units) * 2;
     return hitTest(this.position.x - (size/2), this.position.y - (size/2), size, size);
 };
 
 
 proto.click = function() {
-    console.log('click');
     activeHandle = this;
 };
 
@@ -169,18 +170,19 @@ proto.drag = function() {
         switch (this.mode) {
 
             case 'x':
-                this.position.x = mouseX;
+                this.relativePosition.x = mouseX - this.parent.position.x;
                 break;
 
             case 'y':
-                this.position.y = mouseY;
+                this.relativePosition.y = mouseY - this.parent.position.y;
                 break;
 
             case 'xy':
-                this.position.x = mouseX;
-                this.position.y = mouseY;
+                this.relativePosition.x = mouseX - this.parent.position.x;
+                this.relativePosition.y = mouseY - this.parent.position.y;
                 break;
         }
+        this.position = combinePoints([this.parent.position,this.relativePosition]);
     }
 };
 

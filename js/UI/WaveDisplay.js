@@ -27,13 +27,13 @@ proto.place = function(parent,x,y) {
     this.relativePosition = new Point(x,y);
     this.position = combinePoints([this.parent.position,this.relativePosition]);
 
-    var handleX = this.position.x;
-    var handleY = this.position.y - (6*units);
+    var handleX = 0;
+    var handleY = - (6*units);
     var perc = UI.body/100;
     this.handles = [];
-    this.handles.push(new Handle(handleX + (this.start * perc), handleY, 12, 'x'));
-    this.handles.push(new Handle(handleX + (this.loopStart * perc), handleY, 12, 'x'));
-    this.handles.push(new Handle(handleX + (this.loopEnd * perc), handleY, 12, 'x'));
+    this.handles.push(new Handle(this,handleX + (this.start * perc), handleY, 12, 'x'));
+    this.handles.push(new Handle(this,handleX + (this.loopStart * perc), handleY, 12, 'x'));
+    this.handles.push(new Handle(this,handleX + (this.loopEnd * perc), handleY, 12, 'x'));
 };
 
 //-------------------------------------------------------------------------------------------
@@ -152,9 +152,9 @@ proto.drag = function() {
 
 proto.update = function() {
     var perc = UI.body/100;
-    this.start = this.handles[0].position.x / perc;
-    this.loopStart = this.handles[1].position.x / perc;
-    this.loopEnd = this.handles[2].position.x / perc;
+    this.start = this.handles[0].relativePosition.x / perc;
+    this.loopStart = this.handles[1].relativePosition.x / perc;
+    this.loopEnd = this.handles[2].relativePosition.x / perc;
 };
 
 
