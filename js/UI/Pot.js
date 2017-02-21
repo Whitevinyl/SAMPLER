@@ -39,11 +39,16 @@ var proto = Pot.prototype;
 //  POSITION
 //-------------------------------------------------------------------------------------------
 
-proto.place = function(x,y,size) {
-    this.position = new Point(x,y);
+proto.place = function(parent,x,y,size) {
+    this.parent = parent;
+    this.relativePosition = new Point(x,y);
+    this.position = combinePoints([this.parent.position,this.relativePosition]);
     this.size     = arg(size,65);
 };
 
+proto.resize = function() {
+
+};
 
 //-------------------------------------------------------------------------------------------
 //  INTERACTION
@@ -91,7 +96,7 @@ proto.drag = function() {
 //-------------------------------------------------------------------------------------------
 
 proto.update = function() {
-    this.display = lerp(this.display,this.value,22);
+    this.display = lerp(this.display,this.value,25);
 };
 
 
@@ -158,7 +163,7 @@ proto.draw = function(ctx,font) {
 
     // Center mark //
     if (this.center) {
-        ctx.lineWidth = 1.5 * u;
+        ctx.lineWidth = lineWeight * u;
         ctx.beginPath();
         ctx.moveTo(x,y - rad);
         ctx.lineTo(x,y - rad + width);

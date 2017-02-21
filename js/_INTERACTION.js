@@ -56,12 +56,14 @@ function mousePress() {
     rolloverCheck();
 
     // LOOP POTS (Temp ) //
-    var l = pots.length;
+    /*var l = pots.length;
     for (var i=0; i<l; i++) {
         if (pots[i].hitTest()) {
             pots[i].click();
         }
-    }
+    }*/
+
+    UI.click();
 }
 
 
@@ -92,7 +94,7 @@ function mouseMove(event) {
 
 
     // LOOP POTS (Temp ) //
-    potOver = false;
+    /*potOver = false;
     var l = pots.length;
     for (var i=0; i<l; i++) {
         if (pots[i].hitTest()) {
@@ -102,7 +104,9 @@ function mouseMove(event) {
         if (mouseIsDown) {
             pots[i].drag();
         }
-    }
+    }*/
+
+    UI.drag();
 }
 
 function rolloverCheck() {

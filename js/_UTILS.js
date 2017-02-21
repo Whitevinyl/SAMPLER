@@ -110,6 +110,19 @@ function normalizeVector(vector, scale) {
 }
 
 
+// COMBINE POINTS //
+function combinePoints(points) {
+    var l = points.length;
+    var point = new Point();
+
+    for (var i=0; i<l; i++) {
+        point.x += points[i].x;
+        point.y += points[i].y;
+    }
+    return point;
+}
+
+
 // AVERAGE OF TWO VALUES //
 function getAverage(a,b) {
     return (a+b)/2;

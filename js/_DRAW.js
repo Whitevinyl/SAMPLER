@@ -1,5 +1,7 @@
 
 
+var lineWeight = 1.6;
+
 var noisePNG = new Image();
 noisePNG.src = 'img/noise5.png';
 
@@ -38,20 +40,22 @@ function drawScene() {
     setFont(ct,font,bodyType);
 
     // LOOP POTS (Temp ) //
-    var l = pots.length;
+    /*var l = pots.length;
     for (var i=0; i<l; i++) {
         pots[i].draw(ct, font);
     }
-    wave.draw(ct, font);
+    wave.draw(ct, font);*/
+
+    UI.draw(ct, font);
 
 
     /*color.stroke(ct,textCol);
-    ct.lineWidth = 1.5 * u;
+    ct.lineWidth = lineWeight * u;
     drawDragCursor(ct,mouseX,mouseY,(12 * (dragCursor.a/100)) * u);*/
 
     color.stroke(ct,textCol);
-    ct.lineWidth = 1.5 * u;
-    drawMenuIcon(ct,fullX - (30*u), (25*u), 28*u, 12*u);
+    ct.lineWidth = lineWeight * u;
+    drawMenuIcon(ct,fullX - (30*u), (25*u), 28*u, 11*u);
 
     drawPattern(ct,0,0,fullX,fullY,noisePNG,150);
 }

@@ -5,7 +5,7 @@
 //  INIT
 //-------------------------------------------------------------------------------------------
 
-var division = 1.5;
+var division = 1.6;
 
 function WaveDisplay() {
     this.data = [[],[]];
@@ -22,15 +22,18 @@ var proto = WaveDisplay.prototype;
 //  POSITION
 //-------------------------------------------------------------------------------------------
 
-proto.place = function(x,y) {
-    this.position = new Point(x,y);
+proto.place = function(parent,x,y) {
+    this.parent = parent;
+    this.relativePosition = new Point(x,y);
+    this.position = combinePoints([this.parent.position,this.relativePosition]);
 
-    var handleY = y - (6*units);
+    var handleX = this.position.x;
+    var handleY = this.position.y - (6*units);
     var perc = UI.body/100;
     this.handles = [];
-    this.handles.push(new Handle(x + (this.start * perc), handleY));
-    this.handles.push(new Handle(x + (this.loopStart * perc), handleY));
-    this.handles.push(new Handle(x + (this.loopEnd * perc), handleY));
+    this.handles.push(new Handle(handleX + (this.start * perc), handleY));
+    this.handles.push(new Handle(handleX + (this.loopStart * perc), handleY));
+    this.handles.push(new Handle(handleX + (this.loopEnd * perc), handleY));
 };
 
 //-------------------------------------------------------------------------------------------
@@ -103,13 +106,33 @@ proto.populate = function(data, duration) {
 
 
     // NORMALISE //
-    var norm = 1/peak;
-    for (i=0; i<l; i++) {
-        this.data[0][i] *= norm;
-        this.data[1][i] *= norm;
+    if (peak > 0.2) {
+        var norm = 1/peak;
+        for (i=0; i<l; i++) {
+            this.data[0][i] *= norm;
+            this.data[1][i] *= norm;
+        }
     }
 };
 
+
+//-------------------------------------------------------------------------------------------
+//  INTERACTION
+//-------------------------------------------------------------------------------------------
+
+proto.hitTest = function() {
+    var size = 10;
+    return hitTest(this.position.x, this.position.y, size, size);
+};
+
+
+proto.click = function() {
+};
+
+
+proto.drag = function() {
+
+};
 
 //-------------------------------------------------------------------------------------------
 //  UPDATE
@@ -137,7 +160,7 @@ proto.draw = function(ctx,font) {
 
 
     ctx.globalAlpha = 1;
-
+    ctx.lineWidth = lineWeight * u;
 
     // STYLE A //
     /*color.fill(ctx,secondaryCol);
@@ -181,8 +204,14 @@ proto.draw = function(ctx,font) {
 
     // highlight //
     color.fill(ctx,highlightCol);
+    color.stroke(ctx,highlightCol);
     ctx.globalAlpha = 0.1;
     ctx.fillRect(x + ls, y-h, le - ls, h*2);
+
+    ctx.beginPath();
+    ctx.moveTo(x + st, y - h);
+    ctx.lineTo(x + st, y + h);
+    ctx.stroke();
 
     //darken //
     color.fill(ctx,bgCols[0]);
@@ -201,7 +230,6 @@ proto.draw = function(ctx,font) {
     // MARKINGS //
     color.fill(ctx,textCol);
     color.stroke(ctx,textCol);
-    ctx.lineWidth = 1.5 * u;
     ctx.textAlign = 'center';
     setFont(ctx,font,dataType);
 
