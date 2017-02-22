@@ -1,6 +1,7 @@
 
 
-var lineWeight = 1.6;
+var thickLine = 1.7;
+var thinLine = 1.4;
 
 var noisePNG = new Image();
 noisePNG.src = 'img/noise5.png';
@@ -30,7 +31,7 @@ function drawBG() {
 
 function drawScene() {
     var u = units;
-    var font = "Open Sans";
+    var font = "Open Sans, Helvetica, sans-serif";
     var ct = ctx[0];
 
 
@@ -54,7 +55,7 @@ function drawScene() {
     drawDragCursor(ct,mouseX,mouseY,(12 * (dragCursor.a/100)) * u);*/
 
     color.stroke(ct,textCol);
-    ct.lineWidth = lineWeight * u;
+    ct.lineWidth = thickLine * u;
     drawMenuIcon(ct,fullX - (30*u), (25*u), 28*u, 11*u);
 
     drawPattern(ct,0,0,fullX,fullY,noisePNG,150);

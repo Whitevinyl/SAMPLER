@@ -106,7 +106,7 @@ proto.populate = function(data, duration) {
 
 
     // NORMALISE //
-    if (peak > 0.2) {
+    if (peak > 0.1) { // maybe scale norm strength based on level
         var norm = 1/peak;
         for (i=0; i<l; i++) {
             this.data[0][i] *= norm;
@@ -142,6 +142,33 @@ proto.drag = function() {
         for (var i=0; i<l; i++) {
             this.handles[i].drag();
         }
+
+
+        // boundaries //
+        if (this.handles[0] != activeHandle && this.handles[0].position.x > this.handles[1].position.x) {
+            this.handles[0].position.x = this.handles[1].position.x;
+        }
+        if (this.handles[1] != activeHandle && this.handles[1].position.x < this.handles[0].position.x) {
+            this.handles[1].position.x = this.handles[0].position.x;
+        }
+        if (this.handles[2] != activeHandle && this.handles[2].position.x <= this.handles[1].position.x) {
+            this.handles[2].position.x = this.handles[1].position.x + 2;
+        }
+        if (this.handles[1] != activeHandle && this.handles[1].position.x >= this.handles[2].position.x) {
+            this.handles[1].position.x = this.handles[2].position.x - 2;
+        }
+
+        this.handles[0].position.x = valueInRange(this.handles[0].position.x, this.position.x, this.position.x + UI.body);
+        this.handles[1].position.x = valueInRange(this.handles[1].position.x, this.position.x, this.position.x + UI.body - 2);
+        this.handles[2].position.x = valueInRange(this.handles[2].position.x, this.position.x, this.position.x + UI.body);
+
+
+
+        // settings //
+        var perc = UI.body/100;
+        this.start = this.handles[0].relativePosition.x / perc;
+        this.loopStart = this.handles[1].relativePosition.x / perc;
+        this.loopEnd = this.handles[2].relativePosition.x / perc;
     }
 };
 
@@ -151,10 +178,12 @@ proto.drag = function() {
 //-------------------------------------------------------------------------------------------
 
 proto.update = function() {
-    var perc = UI.body/100;
-    this.start = this.handles[0].relativePosition.x / perc;
-    this.loopStart = this.handles[1].relativePosition.x / perc;
-    this.loopEnd = this.handles[2].relativePosition.x / perc;
+
+    // handles //
+    var l = this.handles.length;
+    for (var i=0; i<l; i++) {
+        this.handles[i].update();
+    }
 };
 
 
@@ -175,7 +204,7 @@ proto.draw = function(ctx,font) {
 
 
     ctx.globalAlpha = 1;
-    ctx.lineWidth = lineWeight * u;
+    ctx.lineWidth = thickLine * u;
 
     // STYLE A //
     /*color.fill(ctx,secondaryCol);
@@ -212,9 +241,21 @@ proto.draw = function(ctx,font) {
     ctx.fill();
 
 
-    var st = this.start * perc;
+    /*var st = this.start * perc;
     var ls = this.loopStart * perc;
-    var le = this.loopEnd * perc;
+    var le = this.loopEnd * perc;*/
+
+    var st = this.handles[0].displayPosition.x - this.position.x;
+    var ls = this.handles[1].displayPosition.x - this.position.x;
+    var le = this.handles[2].displayPosition.x - this.position.x;
+
+
+    //darken //
+    color.fill(ctx,bgCols[0]);
+    ctx.globalAlpha = 0.7;
+    ctx.fillRect(x, y-h, st, h*2);
+    ctx.fillRect(x + le, y-h, w - le, h*2);
+
 
 
     // highlight //
@@ -227,12 +268,6 @@ proto.draw = function(ctx,font) {
     ctx.moveTo(x + st, y - h);
     ctx.lineTo(x + st, y + h);
     ctx.stroke();
-
-    //darken //
-    color.fill(ctx,bgCols[0]);
-    ctx.globalAlpha = 0.6;
-    ctx.fillRect(x, y-h, st, h*2);
-    ctx.fillRect(x + le, y-h, w - le, h*2);
     ctx.globalAlpha = 1;
 
     // handles //

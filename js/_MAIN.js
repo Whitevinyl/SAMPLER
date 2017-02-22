@@ -75,14 +75,16 @@ function init() {
 
 
     // DONE //
-    fonts = new Fonts(['Bodoni:n4,o4'],2,function(){
-        setupDrawing();
-        draw();
-    });
-    fonts.setup();
+    //fonts = new Fonts(['Bodoni:n4,o4'],2,ready);
+    //fonts.setup();
+    ready();
 }
 
 
+function ready() {
+    setupDrawing();
+    draw();
+}
 
 
 //-------------------------------------------------------------------------------------------

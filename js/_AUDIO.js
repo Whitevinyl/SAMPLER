@@ -19,7 +19,7 @@ function setupAudio() {
     url = 'audio/hit_tray2.wav';
     url = 'audio/hit_xylophone2.wav';
     url = 'audio/ambient01.mp3';
-    url = 'audio/drums01.mp3';
+    //url = 'audio/drums01.mp3';
 
     sampleBuffer = new Tone.Buffer(url,bufferLoaded);
 

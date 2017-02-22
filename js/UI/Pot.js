@@ -165,7 +165,7 @@ proto.draw = function(ctx,font) {
 
     // Center mark //
     if (this.center) {
-        ctx.lineWidth = lineWeight * u;
+        ctx.lineWidth = thinLine * u;
         ctx.beginPath();
         ctx.moveTo(x,y - rad);
         ctx.lineTo(x,y - rad + width);
