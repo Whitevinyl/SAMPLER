@@ -75,9 +75,9 @@ function init() {
 
 
     // DONE //
-    //fonts = new Fonts(['Bodoni:n4,o4'],2,ready);
-    //fonts.setup();
-    ready();
+    fonts = new Fonts(['Open Sans:n3,i3,n4'],3,ready);
+    fonts.setup();
+    //ready();
 }
 
 
