@@ -56,6 +56,7 @@ function metrics() {
     } else {
 
         u = (height * ratio) * 1.8;
+        u = (width * ratio)* 0.97;
         units = (u/800);
 
         // TEXT SIZES //

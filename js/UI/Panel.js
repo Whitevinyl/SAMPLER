@@ -8,8 +8,30 @@
 function Panel(x,y) {
     this.position = new Point(x,y);
     this.controls = [];
+    this.controlPositions = [];
+    this.wave = null;
+    this.duration = 0;
 }
 proto = Panel.prototype;
+
+//-------------------------------------------------------------------------------------------
+//  POSITION
+//-------------------------------------------------------------------------------------------
+
+proto.resize = function(x,y) {
+
+    if (x) {
+        this.position.x = x;
+    }
+    if (y) {
+        this.position.y = y;
+    }
+
+    var l = this.controls.length;
+    for (var i=0; i<l; i++) {
+        this.controls[i].resize(this.controlPositions[i]);
+    }
+};
 
 //-------------------------------------------------------------------------------------------
 //  UPDATE

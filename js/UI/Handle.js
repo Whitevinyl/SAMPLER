@@ -15,6 +15,17 @@ function Handle(parent,x,y,size,mode) {
 }
 proto = Handle.prototype;
 
+
+//-------------------------------------------------------------------------------------------
+//  POSITION
+//-------------------------------------------------------------------------------------------
+
+proto.resize = function(x,y) {
+    this.relativePosition = new Point(x,y);
+    this.position = combinePoints([this.parent.position,this.relativePosition]);
+};
+
+
 //-------------------------------------------------------------------------------------------
 //  UPDATE
 //-------------------------------------------------------------------------------------------
@@ -23,6 +34,7 @@ proto.update = function() {
     this.displayPosition.x = lerp(this.displayPosition.x,this.position.x,30);
     this.displayPosition.y = lerp(this.displayPosition.y,this.position.y,30);
 };
+
 
 //-------------------------------------------------------------------------------------------
 //  DRAW
@@ -45,6 +57,7 @@ proto.draw = function(ctx) {
     ctx.closePath();
     ctx.stroke();
 };
+
 
 //-------------------------------------------------------------------------------------------
 //  INTERACTION

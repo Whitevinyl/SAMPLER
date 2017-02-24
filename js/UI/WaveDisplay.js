@@ -22,9 +22,9 @@ var proto = WaveDisplay.prototype;
 //  POSITION
 //-------------------------------------------------------------------------------------------
 
-proto.place = function(parent,x,y) {
+proto.place = function(parent,point) {
     this.parent = parent;
-    this.relativePosition = new Point(x,y);
+    this.relativePosition = new Point(point.x * units,point.y * units);
     this.position = combinePoints([this.parent.position,this.relativePosition]);
 
     var handleX = 0;
@@ -36,11 +36,30 @@ proto.place = function(parent,x,y) {
     this.handles.push(new Handle(this,handleX + (this.loopEnd * perc), handleY, 12, 'x'));
 };
 
+proto.resize = function(point) {
+    if (point) {
+        this.relativePosition = new Point(point.x * units,point.y * units);
+        this.position = combinePoints([this.parent.position,this.relativePosition]);
+    }
+    this.populate(this.parent.wave,this.parent.duration);
+
+    var handleX = 0;
+    var handleY = - (6*units);
+    var perc = UI.body/100;
+    this.handles[0].resize(handleX + (this.start * perc), handleY);
+    this.handles[1].resize(handleX + (this.loopStart * perc), handleY);
+    this.handles[2].resize(handleX + (this.loopEnd * perc), handleY);
+
+};
+
 //-------------------------------------------------------------------------------------------
 //  POPULATE
 //-------------------------------------------------------------------------------------------
 
 proto.populate = function(data, duration) {
+
+    this.parent.wave = data;
+    this.parent.duration = duration;
 
     // MONO OR STEREO //
     var mono = true;

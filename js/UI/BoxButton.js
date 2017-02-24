@@ -16,15 +16,18 @@ var proto = BoxButton.prototype;
 //-------------------------------------------------------------------------------------------
 
 
-proto.place = function(parent,x,y,w,h) {
+proto.place = function(parent,point,w,h) {
     this.parent = parent;
-    this.relativePosition = new Point(x,y);
+    this.relativePosition = new Point(point.x * units,point.y * units);
     this.position = combinePoints([this.parent.position,this.relativePosition]);
     this.size = new Point(w,h);
 };
 
-proto.resize = function() {
-
+proto.resize = function(point) {
+    if (point) {
+        this.relativePosition = new Point(point.x * units,point.y * units);
+        this.position = combinePoints([this.parent.position,this.relativePosition]);
+    }
 };
 
 //-------------------------------------------------------------------------------------------

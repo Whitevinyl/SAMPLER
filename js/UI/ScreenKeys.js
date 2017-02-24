@@ -15,14 +15,17 @@ proto = ScreenKeys.prototype;
 //-------------------------------------------------------------------------------------------
 
 
-proto.place = function(parent,x,y) {
+proto.place = function(parent,point) {
     this.parent = parent;
-    this.relativePosition = new Point(x,y);
+    this.relativePosition = new Point(point.x * units,point.y * units);
     this.position = combinePoints([this.parent.position,this.relativePosition]);
 };
 
-proto.resize = function() {
-
+proto.resize = function(point) {
+    if (point) {
+        this.relativePosition = new Point(point.x * units,point.y * units);
+        this.position = combinePoints([this.parent.position,this.relativePosition]);
+    }
 };
 
 

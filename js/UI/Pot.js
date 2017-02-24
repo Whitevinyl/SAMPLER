@@ -39,15 +39,18 @@ var proto = Pot.prototype;
 //  POSITION
 //-------------------------------------------------------------------------------------------
 
-proto.place = function(parent,x,y,size) {
+proto.place = function(parent,point,size) {
     this.parent = parent;
-    this.relativePosition = new Point(x,y);
+    this.relativePosition = new Point(point.x * units,point.y * units);
     this.position = combinePoints([this.parent.position,this.relativePosition]);
     this.size     = arg(size,65);
 };
 
-proto.resize = function() {
-
+proto.resize = function(point) {
+    if (point) {
+        this.relativePosition = new Point(point.x * units,point.y * units);
+        this.position = combinePoints([this.parent.position,this.relativePosition]);
+    }
 };
 
 //-------------------------------------------------------------------------------------------
