@@ -28,10 +28,11 @@ proto.setup = function() {
     // SAMPLER PANEL //
     this.sampler = new Panel(dx - (this.body/2),0);
     pos = [
-        new Point(  30, dyu + 5),
-        new Point( 120, dyu + 5),
+        new Point((bu/2) - 150, dyu + 5),
+        new Point((bu/2) + 150, dyu + 5),
         new Point(   0, 45),
-        new Point(bu/2, dyu - 40)
+        new Point(bu/2, dyu - 40),
+        new Point(0, dyu + 5)
     ];
     this.sampler.controlPositions = pos;
 
@@ -50,6 +51,13 @@ proto.setup = function() {
     button = new BoxButton('New Sample',buttonEvent);
     button.place(this.sampler,pos[3], 170, 40);
     this.sampler.controls.push(button);
+
+    button = new SamplerMode(['One Shot', 'Looping', 'Granular'],0);
+    button.place(this.sampler,pos[4]);
+    this.sampler.controls.push(button);
+
+
+
 
 
     // KEYBOARD PANEL //
