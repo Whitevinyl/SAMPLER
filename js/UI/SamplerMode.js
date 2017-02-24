@@ -48,12 +48,15 @@ proto.click = function() {
 
         if (mouseY < (sy + thirdY)) {
             this.value = 0;
+            colorToColor(primaryCol,primaries[2],0.4);
         }
         else if (mouseY > (sy + (thirdY * 2))) {
             this.value = 2;
+            colorToColor(primaryCol,primaries[0],0.4);
         }
         else {
             this.value = 1;
+            colorToColor(primaryCol,primaries[1],0.4);
         }
 
     }
