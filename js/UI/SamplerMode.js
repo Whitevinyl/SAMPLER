@@ -79,9 +79,9 @@ proto.draw = function(ctx,font) {
     // Label //
     setFont(ctx,font,bodyType,400,'italic');
     var fontOff = bodyType * 0.3;
-    ctx.fillText(this.labels[0],x,y + fontOff - (bodyType * 1.5));
+    ctx.fillText(this.labels[0],x,y + fontOff - (bodyType * 2.3));
     ctx.fillText(this.labels[1],x,y + fontOff);
-    ctx.fillText(this.labels[2],x,y + fontOff + (bodyType * 1.5));
+    ctx.fillText(this.labels[2],x,y + fontOff + (bodyType * 2.3));
 
 };
 

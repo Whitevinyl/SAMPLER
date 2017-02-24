@@ -16,8 +16,9 @@ var units = 0;
 var dx = halfX;
 var dy = halfY;
 var headerType = 0;
-var midType = 0;
+var largeType = 0;
 var dataType = 0;
+var midType = 0;
 var bodyType = 0;
 var subType = 0;
 var device = "desktop";
@@ -75,7 +76,7 @@ function init() {
 
 
     // DONE //
-    fonts = new Fonts(['Open Sans:n3,i3,n4'],3,ready);
+    fonts = new Fonts(['Open Sans:n3,i4,n4'],3,ready);
     fonts.setup();
     //ready();
 }

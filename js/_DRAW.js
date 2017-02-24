@@ -38,7 +38,7 @@ function drawScene() {
 
     color.fill(ct,textCol);
     ct.textAlign = 'center';
-    setFont(ct,font,bodyType);
+    setFont(ct,font,midType);
 
     // LOOP POTS (Temp ) //
     /*var l = pots.length;

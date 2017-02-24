@@ -123,7 +123,7 @@ proto.draw = function(ctx,font) {
     var valOffset = 0;
     var roundVal = Math.round(this.value);
     if (roundVal < 0) {
-        valOffset = -(midType * 0.15); // ignore minus sign for centering
+        valOffset = -(largeType * 0.15); // ignore minus sign for centering
     }
     var width = ringWidth * u;
     var fillAngle = fullAngle * this.normal();
@@ -159,8 +159,8 @@ proto.draw = function(ctx,font) {
     ctx.textAlign = 'center';
 
     // Value //
-    setFont(ctx,font,midType,300);
-    ctx.fillText(''+roundVal,x + valOffset,y + (midType * 0.32));
+    setFont(ctx,font,largeType,300);
+    ctx.fillText(''+roundVal,x + valOffset,y + (largeType * 0.32));
 
     // Label //
     setFont(ctx,font,dataType);

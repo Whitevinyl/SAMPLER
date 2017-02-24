@@ -91,8 +91,8 @@ proto.draw = function(ctx, font) {
     ctx.textAlign = 'center';
 
     // label //
-    setFont(ctx,font,bodyType,300);
-    ctx.fillText(this.label,x,y + (bodyType * 0.32));
+    setFont(ctx,font,midType,300);
+    ctx.fillText(this.label,x,y + (midType * 0.32));
 
     // arrow //
     var as = 6*u;
