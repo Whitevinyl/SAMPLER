@@ -17,7 +17,7 @@ var proto = MasterUI.prototype;
 
 proto.setup = function() {
     this.resize();
-    var pos, pot, wave, keys, button;
+    var pos, pot, wave, keys, button, data;
     var u = units;
 
     var dxu = dx/u;
@@ -33,7 +33,8 @@ proto.setup = function() {
         new Point(   0, 45),
         new Point(bu/2, dyu - 45),
         new Point(0, dyu - 10.5),
-        new Point(122, dyu + 3.5)
+        new Point(122, dyu + 3.5),
+        new Point(bu/2, dyu + 3.5)
     ];
     this.sampler.controlPositions = pos;
 
@@ -50,7 +51,7 @@ proto.setup = function() {
     this.sampler.controls.push(wave);
 
     button = new BoxButton('New Sample',buttonEvent);
-    button.place(this.sampler,pos[3], 160, 35);
+    button.place(this.sampler,pos[3], 165, 35);
     this.sampler.controls.push(button);
 
     button = new SamplerMode(['One Shot', 'Looping', 'Granular'],0);
@@ -61,7 +62,9 @@ proto.setup = function() {
     button.place(this.sampler,pos[5]);
     this.sampler.controls.push(button);
 
-
+    data = new TrackDetails('Spectral Digits','Procedurally Generated');
+    data.place(this.sampler,pos[6]);
+    this.sampler.controls.push(data);
 
 
     // KEYBOARD PANEL //
