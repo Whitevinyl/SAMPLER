@@ -28,20 +28,20 @@ proto.setup = function() {
     // SAMPLER PANEL //
     this.sampler = new Panel(dx - (this.body/2),0);
     pos = [
-        new Point((bu/2) - 150, dyu + 5),
-        new Point((bu/2) + 150, dyu + 5),
+        new Point((bu/2) - 150, dyu - 14),
+        new Point((bu/2) + 150, dyu - 14),
         new Point(   0, 45),
-        new Point(bu/2, dyu - 40),
-        new Point(0, dyu + 5)
+        new Point(bu/2, dyu - 45),
+        new Point(0, dyu - 14)
     ];
     this.sampler.controlPositions = pos;
 
-    pot = new Pot('Chance', 0, 99, 89);
-    pot.place(this.sampler, pos[0],64);
+    pot = new Pot('Rate', 0, 99, 50);
+    pot.place(this.sampler, pos[0],62);
     this.sampler.controls.push(pot);
 
-    pot = new Pot('Depth', -20, 20, 14, true);
-    pot.place(this.sampler, pos[1],64);
+    pot = new Pot('Glitch', 0, 99, 0);
+    pot.place(this.sampler, pos[1],62);
     this.sampler.controls.push(pot);
 
     wave = new WaveDisplay();
@@ -49,7 +49,7 @@ proto.setup = function() {
     this.sampler.controls.push(wave);
 
     button = new BoxButton('New Sample',buttonEvent);
-    button.place(this.sampler,pos[3], 170, 40);
+    button.place(this.sampler,pos[3], 160, 35);
     this.sampler.controls.push(button);
 
     button = new SamplerMode(['One Shot', 'Looping', 'Granular'],0);
@@ -82,7 +82,7 @@ function buttonEvent() {
 
 proto.update = function() {
     conditionAlpha((potOver || activePot),dragCursor,5);
-    primaryCol = color.blend(primaries[1], primaries[2],this.sampler.controls[0].value);
+    //primaryCol = color.blend(primaries[1], primaries[2],this.sampler.controls[0].value);
 
     this.sampler.update();
     this.keyboard.update();
