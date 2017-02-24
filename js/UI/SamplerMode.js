@@ -96,9 +96,10 @@ proto.draw = function(ctx,font) {
     // Label //
     setFont(ctx,font,bodyType,400,'italic');
     var fontOff = bodyType * 0.3;
-    ctx.fillText(this.labels[0], x + margin, y + fontOff - (bodyType * 2.6));
+    var vSpace = bodyType * 2.7;
+    ctx.fillText(this.labels[0], x + margin, y + fontOff - vSpace);
     ctx.fillText(this.labels[1], x + margin, y + fontOff);
-    ctx.fillText(this.labels[2], x + margin, y + fontOff + (bodyType * 2.6));
+    ctx.fillText(this.labels[2], x + margin, y + fontOff + vSpace);
 
 
     var ih = 9 * u;
@@ -110,10 +111,10 @@ proto.draw = function(ctx,font) {
         color.stroke(ctx,textCol);
     }
     ctx.beginPath();
-    ctx.moveTo(x     ,     y - (bodyType * 2.6) + (ih/2));
-    ctx.lineTo(x + ih,     y - (bodyType * 2.6) - (ih/2));
-    ctx.lineTo(x + ih,     y - (bodyType * 2.6) + (ih/2));
-    ctx.lineTo(x + (ih*2), y - (bodyType * 2.6) - (ih/2));
+    ctx.moveTo(x     ,     y - vSpace + (ih/2));
+    ctx.lineTo(x + ih,     y - vSpace - (ih/2));
+    ctx.lineTo(x + ih,     y - vSpace + (ih/2));
+    ctx.lineTo(x + (ih*2), y - vSpace - (ih/2));
     ctx.stroke();
 
 
@@ -136,10 +137,10 @@ proto.draw = function(ctx,font) {
         color.stroke(ctx,textCol);
     }
     ctx.beginPath();
-    ctx.moveTo(x     ,     y + (bodyType * 2.6) + (ih/2));
-    ctx.lineTo(x + ih,     y + (bodyType * 2.6) - (ih/2));
-    ctx.moveTo(x + ih,     y + (bodyType * 2.6) + (ih/2));
-    ctx.lineTo(x + (ih*2), y + (bodyType * 2.6) - (ih/2));
+    ctx.moveTo(x     ,     y + vSpace + (ih/2));
+    ctx.lineTo(x + ih,     y + vSpace - (ih/2));
+    ctx.moveTo(x + ih,     y + vSpace + (ih/2));
+    ctx.lineTo(x + (ih*2), y + vSpace - (ih/2));
     ctx.stroke();
 
 

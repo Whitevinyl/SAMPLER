@@ -32,7 +32,8 @@ proto.setup = function() {
         new Point((bu/2) + 150, dyu - 14),
         new Point(   0, 45),
         new Point(bu/2, dyu - 45),
-        new Point(0, dyu - 14)
+        new Point(0, dyu - 10.5),
+        new Point(122, dyu + 3.5)
     ];
     this.sampler.controlPositions = pos;
 
@@ -56,6 +57,9 @@ proto.setup = function() {
     button.place(this.sampler,pos[4]);
     this.sampler.controls.push(button);
 
+    button = new Reverse('Reverse',false);
+    button.place(this.sampler,pos[5]);
+    this.sampler.controls.push(button);
 
 
 
